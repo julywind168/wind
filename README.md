@@ -26,5 +26,5 @@ wind 语言的设计初衷是用来取代 lua 为代表的脚本语言，目前�
 ```
 如果你对这个项目感兴趣的话,欢迎赞助
 ```
-<img src="https://raw.githubusercontent.com/HYbutterfly/Fantasy-scorpio-donation/master/wechatpay.png" align="left" height="400" width="300">
-<img src="https://raw.githubusercontent.com/HYbutterfly/Fantasy-scorpio-donation/master/alipay.png" height="400" width="300">
+<img src="https://github.com/julywind168/wind/wiki/img/wechatpay.png" align="left" height="400" width="300">
+<img src="https://github.com/julywind168/wind/wiki/img/alipay.png" height="400" width="300">
