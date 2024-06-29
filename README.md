@@ -7,7 +7,7 @@ The wind programming language
 
 
 # 介绍
-wind 语言是我独立开发的，编译型语言，类似于 swift rust 均以 llvm 为后端
+wind 语言是我独立开发的，静态类型 编译型 通用语言，类似于 swift rust 均以 llvm 为后端
 
 wind 语言有很多的脚本语言的特征，jit 以及基于jit的 hotfix
 
