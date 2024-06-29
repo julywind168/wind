@@ -1,6 +1,10 @@
 # wind
 The wind programming language
 
+# 设计
+语法设计见wiki: [Syntax](https://github.com/julywind168/wind/wiki/Syntax)
+, 欢迎到 [Discussions](https://github.com/julywind168/wind/discussions) 讨论
+
 
 # 介绍
 wind 语言是我独立开发的，编译型语言，类似于 swift rust 均以 llvm 为后端
@@ -11,7 +15,7 @@ wind 语言有很多的脚本语言的特征，jit 以及基于jit的 hotfix
 
 wind 语言的设计初衷是用来取代 lua 为代表的脚本语言，目前来说，非常符合我的预期
 
-[【Wind语言10分钟沉浸式演示】](https://www.bilibili.com/video/BV1TTgXeLEZm/?share_source=copy_web&vd_source=2222e526faccca1d956aefc8ebbeb59b)
+[【Wind语言10分钟沉浸式演示】](https://www.bilibili.com/video/BV1TTgXeLEZm/?share_source=copy_web&vd_source=2222e526faccca1d956aefc8ebbeb59b)(视频中的语法可能已过时)
 
 # 状态
 
