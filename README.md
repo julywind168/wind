@@ -9,8 +9,6 @@ The wind programming language
 # 介绍
 wind 语言是我独立开发的，编译型语言，类似于 swift rust 均以 llvm 为后端
 
-wind 语言语法设计较多的参考了 lua swift 及其他语言
-
 wind 语言有很多的脚本语言的特征，jit 以及基于jit的 hotfix
 
 wind 语言的设计初衷是用来取代 lua 为代表的脚本语言，目前来说，非常符合我的预期
