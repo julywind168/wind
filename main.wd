@@ -10,13 +10,13 @@
 
 (impl array<T>
     (func (append self value'T) {
-        (self.adjust self.capacity + 1)
+        (self.adjust self.size + 1)
         (self.data[(self.size.to_i32)] = value)
         (self.size = self.size + 1)
     })
 
-    (func (adjust self new_capacity'u64) {
-        (if new_capacity > self.capacity {
+    (func (adjust self size'u64) {
+        (if size > self.capacity {
             (self.capacity = self.capacity * 2)
             (self.data = (realloc self.data self.capacity * (sizeof T)))
         })
