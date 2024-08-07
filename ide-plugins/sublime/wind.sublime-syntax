@@ -1,0 +1,64 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/syntax.html
+name: Wind
+file_extensions:
+  - wd
+scope: source.wind
+variables:
+  ident: '[A-Za-z_][A-Za-z_0-9]*'
+contexts:
+  main:
+    - include: line-comment
+    - include: block-comment
+    
+    - match: '"'
+      scope: punctuation.definition.string.begin.wind
+      push: double_quoted_string
+
+    - match: (?://|[-+*/%^])
+      scope: keyword.operator.arithmetic.wind
+
+    - match: (?:true|false|nil)
+      scope: constant.language.none.wind
+
+    - match: (?:[=<>!]=)
+      scope: keyword.operator.comparison.wind
+
+    - match: (?:=)
+      scope: keyword.operator.assignment.wind
+
+    - match: '\b(if|loop|cond|match)\b'
+      scope: keyword.control.wind
+
+    - match: '\b(void|ptr|bool|i8|i16|i32|i64|u8|u16|u32|u64|f32|f64)\b'
+      scope: keyword.type.wind
+
+    - match: '\b(var|let|extern|func|struct|impl|protocol|sizeof|alloc|cast|self)\b'
+      scope: keyword.other.wind
+
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.wind
+
+  line-comment:
+    - match: //
+      push:
+        - meta_scope: comment.line.wind
+        - match: $
+          pop: true
+
+  block-comment:
+    - match: /\*
+      push:
+        - include: block-comment
+        - meta_scope: comment.block.wind
+        - match: \*/
+          pop: true
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.wind
+    - match: '\\.'
+      scope: constant.character.escape.wind
+    - match: '"'
+      scope: punctuation.definition.string.end.wind
+      pop: true

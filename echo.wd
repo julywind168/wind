@@ -1,0 +1,31 @@
+(extern (printf s''u8 ...))
+(extern (do_socket)'i32)
+(extern (do_bind s'i32 port'i32)'i32)
+(extern (do_listen s'i32)'i32)
+(extern (do_accept s'i32)'i32)
+(extern (c_write fd'i32 buf''u8 start'i32 n'i32)'i32)
+(extern (c_read fd'i32 buf''u8 start'i32 n'i32)'i32)
+
+
+(func (main)'i32 {
+    (let s (do_socket))
+    (do_bind s 8080)
+    (do_listen s)
+    (printf "listen on 8080\n")
+    (let fd (do_accept s))
+    (let buf (alloc u8 1024))
+
+    (loop (var quit false) quit != true {
+        (let n (c_read fd buf 0 1023))
+        (buf[n] = 0'u8)
+        (if n < 0 {
+            (printf "error: %d\n" n)
+            quit = true
+        } {
+            (printf "client: %s" buf)
+            (let _ (c_write fd buf 0 n))
+        })
+    })
+
+    0
+})

@@ -1,0 +1,12 @@
+.vscode
+.DS_Store
+app
+*.dSYM
+*.o
+.clangd
+
+wind
+!wind/
+
+.build
+*.sh

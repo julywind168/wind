@@ -12,8 +12,19 @@ Wind 是一种静态类型，通用编译型语言，它旨在提供一流的 ji
     })
 })
 ```
-Wiki [Wind 简介](https://github.com/julywind168/wind/wiki/Syntax)
+Wiki [Wind入门指南](https://github.com/julywind168/wind/wiki/Guides)
 , 欢迎到 [Discussions](https://github.com/julywind168/wind/discussions) 讨论
+
+# Build (Macos)
+其他系统的构建是类似的，但是未测试
+```bash
+brew install llvm libgc
+mkdir build && cd build
+cmake -G Ninja ..
+ninga
+mv wind ../wind && cd ..
+./wind run main.wd
+```
 
 # Why?
 编程语言已经有很多了，为什么要再写一个呢？它有什么独特优势呢？这是大部分人第一个疑问。
