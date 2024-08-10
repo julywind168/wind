@@ -5,6 +5,8 @@
 
 namespace wind {
 
+#define NAMED_STRUCT 0
+#define NAMED_PROTOCOL 1
 
 extern std::unordered_map<std::string, int> NAMED;
 extern std::unordered_map<std::string, std::vector<std::shared_ptr<Type>>> STRUCT;
@@ -34,14 +36,14 @@ public:
         if (NAMED.count(name) == 0) {
             throw std::runtime_error("Undefined named type: " + name);
         }
-        return NAMED[name] == 0;
+        return NAMED[name] == NAMED_STRUCT;
     }
 
     bool isProtocol() override {
         if (NAMED.count(name) == 0) {
             throw std::runtime_error("Undefined named type: " + name);
         }
-        return NAMED[name] == 1;
+        return NAMED[name] == NAMED_PROTOCOL;
     }
 
     bool isGeneric() {
@@ -72,7 +74,7 @@ public:
     }
 
     static void defineStruct(std::string name, std::vector<std::shared_ptr<Type>> fields) {
-        NAMED[name] = 0;
+        NAMED[name] = NAMED_STRUCT;
         STRUCT[name] = fields;
     }
 
@@ -81,7 +83,7 @@ public:
     }
 
     static void defineProtocol(std::string name) {
-        NAMED[name] = 1;
+        NAMED[name] = NAMED_PROTOCOL;
     }
 };
 }

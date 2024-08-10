@@ -25,7 +25,8 @@ llvm::Value* Unary::codegen(CompileCtx &ctx) {
     auto v = right->codegen(ctx);
     if (op == "!") {
         return ctx.builder->CreateNot(v);
-    } else if (op == "-") {
+    } else {
+        assert(op == "-");
         if (ty->isSigned())
             return ctx.builder->CreateNeg(v, "negtmp");
         else
