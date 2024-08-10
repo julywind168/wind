@@ -363,7 +363,7 @@ std::unique_ptr<Expr> Parser::parseCast(std::shared_ptr<Env> env) {
     return std::make_unique<Cast>(dstTy, std::move(source));
 }
 
-// (foo x'i32 y'i32)'i32
+// (foo<T, T2, ...> x'i32 y'i32)'i32
 std::shared_ptr<Callee> Parser::parseCallee(std::shared_ptr<Env> env, std::vector<std::shared_ptr<wind::BoxedType>> structGenerics) {
     eat('(');
     auto name = parseIdent();

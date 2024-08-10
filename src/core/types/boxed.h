@@ -13,8 +13,6 @@ public:
         ty = new std::shared_ptr<Type>(wind::Type::VOID);
     }
 
-    BoxedType(std::shared_ptr<Type>* ty) : ty(ty) {}
-
     ~BoxedType() {
         delete ty;
     }
