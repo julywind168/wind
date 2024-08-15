@@ -10,7 +10,7 @@ std::shared_ptr<Type> Type::toQuote() {
 
 std::shared_ptr<Type> Type::VOID(new VoidType());
 std::shared_ptr<Type> Type::BOOL(new BoolType());
-std::shared_ptr<Type> Type::PTR(new PtrType());
+std::shared_ptr<Type> Type::PTR(Type::VOID->toQuote());
 std::shared_ptr<Type> Type::I8(new I8Type());
 std::shared_ptr<Type> Type::I16(new I16Type());
 std::shared_ptr<Type> Type::I32(new I32Type());

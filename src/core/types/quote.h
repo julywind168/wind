@@ -25,6 +25,8 @@ public:
 
     bool isPtr() override { return true; }
 
+    bool isVoidPtr() override { return basic->isVoid(); }
+
     std::shared_ptr<Type> getElementTy() override {
         return basic;
     }

@@ -30,15 +30,6 @@ public:
 };
 
 
-class PtrType : public PrimitiveType {
-public:
-    PtrType() {}
-    bool isVoidPtr() override { return true; }
-    bool isPtr() override { return true; }
-    std::string toString() override { return "ptr"; }
-};
-
-
 class I8Type : public PrimitiveType {
 public:
     I8Type() {}
