@@ -66,7 +66,7 @@ void ArrayConstr::initCtor() {
     ctor = parseString(env, "__ArrayConstr__", code);
 }
 
-llvm::Value* ArrayConstr::codegen(CompileCtx &ctx) {
+llvm::Value* ArrayConstr::codegen(CompileCtx &ctx, bool enableDeRef) {
     if (ctor) {
         return ctor->codegen(ctx);
     } else {

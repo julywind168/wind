@@ -11,7 +11,7 @@ void Alloc::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     }
 }
 
-llvm::Value* Alloc::codegen(CompileCtx &ctx) {
+llvm::Value* Alloc::codegen(CompileCtx &ctx, bool enableDeRef) {
     auto sz = size->codegen(ctx);
     return ctx.builder->CreateAlloca(ctx.getTy(basicTy), sz, "ptr");
 }

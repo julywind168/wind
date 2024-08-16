@@ -67,7 +67,7 @@ llvm::Function* Func::genfunc(CompileCtx &ctx, std::vector<std::shared_ptr<wind:
     return f;
 }
 
-llvm::Value* Func::codegen(CompileCtx &ctx) {
+llvm::Value* Func::codegen(CompileCtx &ctx, bool enableDeRef) {
     if (callee->generics.empty()) {
         return genfunc(ctx, {});
     }

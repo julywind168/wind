@@ -20,6 +20,8 @@ void Call::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expec
     for (size_t i = 0; i < params.size(); i++) {
         auto &param = params[i];
         auto paramTy = callee->params.size() > i + self ? callee->params[i+self].ty : nullptr;
+        // func param expect Ref, disable auto deRef
+        paramEnableDeRefs.push_back((paramTy && paramTy->isPtr()) ? false : true);
         param->typecheck(env, paramTy);
     }
     this->ty = callee->retTy->get();
@@ -28,10 +30,10 @@ void Call::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expec
     }
 }
 
-llvm::Value* Call::codegen(CompileCtx &ctx) {
+llvm::Value* Call::codegen(CompileCtx &ctx, bool enableDeRef) {
     std::vector<llvm::Value *> args;
-    for (auto &param : params) {
-        args.push_back(param->codegen(ctx));
+    for (size_t i = 0; i < params.size(); i++) {
+        args.push_back(params[i]->codegen(ctx, paramEnableDeRefs[i]));
         if (args.back() == nullptr)
             panic("Failed to codegen call argument");
     }

@@ -23,7 +23,7 @@ void If::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expecte
     }
 }
 
-llvm::Value* If::codegen(CompileCtx &ctx) {
+llvm::Value* If::codegen(CompileCtx &ctx, bool enableDeRef) {
     llvm::Value* cond = _test->codegen(ctx);
     if (!cond) {
         panic("If::codegen failed, test expr codegen failed");

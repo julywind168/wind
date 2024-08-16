@@ -27,7 +27,7 @@ void Cond::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expec
     }
 }
 
-llvm::Value* Cond::codegen(CompileCtx &ctx) {
+llvm::Value* Cond::codegen(CompileCtx &ctx, bool enableDeRef) {
     llvm::Function *f = ctx.builder->GetInsertBlock()->getParent();
     llvm::BasicBlock *mergeBB = llvm::BasicBlock::Create(*ctx.context, "cond.cont");
     std::vector<llvm::BasicBlock *> testBlocks;

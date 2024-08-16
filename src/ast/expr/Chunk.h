@@ -12,7 +12,7 @@ public:
     
     NodeType nodeTy() const override { return NodeType::CHUNK; }
 
-    llvm::Value* codegen(CompileCtx &ctx) override {
+    llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) override {
         for (auto& expr : exprs) {
             expr->codegen(ctx);
         }

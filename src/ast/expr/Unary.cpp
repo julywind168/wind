@@ -21,7 +21,7 @@ void Unary::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
 }
 
 
-llvm::Value* Unary::codegen(CompileCtx &ctx) {
+llvm::Value* Unary::codegen(CompileCtx &ctx, bool enableDeRef) {
     auto v = right->codegen(ctx);
     if (op == "!") {
         return ctx.builder->CreateNot(v);

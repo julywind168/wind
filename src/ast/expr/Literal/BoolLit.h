@@ -15,7 +15,7 @@ public:
 
     void markTy(std::shared_ptr<wind::Type> ty) override;
 
-    llvm::Value* codegen(CompileCtx &ctx) override;
+    llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) override;
 
     std::string toString() const override { return (value ? "true" : "false"); }
 };

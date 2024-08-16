@@ -25,7 +25,7 @@ void Index::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     }
 }
 
-llvm::Value* Index::getVariableAddress(CompileCtx &ctx) {
+llvm::Value* Index::getVariableAddress(CompileCtx &ctx, bool enableDeRef) {
     return ctx.builder->CreateInBoundsGEP(ctx.getTy(ty), root->codegen(ctx), key->codegen(ctx));
 }
 
@@ -36,7 +36,7 @@ std::unique_ptr<Expr> Index::createIndexCall() {
     return parseString(env, "__index__", code);
 }
 
-llvm::Value* Index::codegen(CompileCtx &ctx) {
+llvm::Value* Index::codegen(CompileCtx &ctx, bool enableDeRef) {
     if (isIndexCall) {
         auto call = createIndexCall();
         call->typecheck(env, ty);

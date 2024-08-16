@@ -15,7 +15,7 @@ void Loop::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expec
     }
 }
 
-llvm::Value* Loop::codegen(CompileCtx &ctx) {
+llvm::Value* Loop::codegen(CompileCtx &ctx, bool enableDeRef) {
     if (init) init->codegen(ctx);
 
     llvm::Function *f = ctx.builder->GetInsertBlock()->getParent();

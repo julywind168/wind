@@ -8,6 +8,11 @@ bool invalidTypeCast(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> from,
     if (from->isPtr() && to->isVoidPtr()) {
         return false;
     }
+    if (from->isPtr() && !to->isPtr()) {
+        if (isEqual(from->getElementTy(), to)) {
+            return false;
+        }
+    }
     auto s = env->lookup(from->toString());
     if (s && s->ty == SymbolType::TYPE && s->t.findProtocol(to->toString())) {
         return false;

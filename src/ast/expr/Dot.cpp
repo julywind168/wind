@@ -72,7 +72,7 @@ llvm::Value* Dot::createCall(CompileCtx &ctx, std::vector<std::shared_ptr<wind::
     return nullptr;
 }
 
-llvm::Value* Dot::getVariableAddress(CompileCtx &ctx) {
+llvm::Value* Dot::getVariableAddress(CompileCtx &ctx, bool enableDeRef) {
     if (root->ty->getName() == "tuple") {
         return ctx.builder->CreateStructGEP(ctx.getStructTy(root->ty), root->getVariableAddress(ctx), std::stoi(key));
     } else {
@@ -92,7 +92,7 @@ llvm::Value* Dot::getVariableAddress(CompileCtx &ctx) {
     }
 }
 
-llvm::Value* Dot::codegen(CompileCtx &ctx) {
+llvm::Value* Dot::codegen(CompileCtx &ctx, bool enableDeRef) {
     auto address = getVariableAddress(ctx);
     return ctx.builder->CreateLoad(ctx.getTy(ty), address, getName());
 }

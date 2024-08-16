@@ -52,7 +52,7 @@ std::unique_ptr<Expr> Equal::createNewIndexCall() {
     return nullptr;
 }
 
-llvm::Value* Equal::codegen(CompileCtx &ctx) {
+llvm::Value* Equal::codegen(CompileCtx &ctx, bool enableDeRef) {
     if (auto call = createNewIndexCall()) {
         call->typecheck(env, ty);
         return call->codegen(ctx);
