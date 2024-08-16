@@ -285,7 +285,7 @@ std::unique_ptr<Expr> Parser::parseImpl(std::shared_ptr<Env> env) {
     // mark self type, don't include generics info
     auto selfTy = wind::getType(tyName, {});
     if (!selfTy->isPrimitive()) {
-        selfTy = selfTy->toQuote();
+        selfTy = selfTy->ref();
     }
     for (auto& f : funcs) {
         f->callee->markSelfTy(selfTy);

@@ -13,7 +13,7 @@ void ArrayConstr::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type
             panic("ArrayConstr::typecheck failed, empty array must mark a type (eg: array<i32>)");
         }
         // 'array<Element>
-        ty = std::make_shared<wind::NamedType>("array", std::vector<std::shared_ptr<wind::Type>>{ety})->toQuote();
+        ty = std::make_shared<wind::NamedType>("array", std::vector<std::shared_ptr<wind::Type>>{ety})->ref();
     } else {
         if (ty->getName() != "array" || ty->getParameters().size() != 1) {
             panic("ArrayConstr::typecheck failed, expected array<T>, got" + ty->toString());

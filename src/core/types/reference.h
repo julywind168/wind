@@ -5,11 +5,11 @@
 
 namespace wind {
 
-class QuoteType : public Type {
+class ReferenceType : public Type {
 public:
     std::shared_ptr<Type> basic;
 
-    QuoteType(std::shared_ptr<Type> basic) : basic(basic) {}
+    ReferenceType(std::shared_ptr<Type> basic) : basic(basic) {}
 
     std::string getName() override {
         return basic->getName();

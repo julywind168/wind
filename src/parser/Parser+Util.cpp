@@ -11,7 +11,7 @@ std::shared_ptr<wind::Type> Parser::tryParseMarkedTy(std::shared_ptr<Env> env, s
 
 std::shared_ptr<wind::Type> Parser::parseTy(std::shared_ptr<Env> env) {
     if (tryEat("'")) {
-        return std::make_shared<wind::QuoteType>(parseTy(env));
+        return std::make_shared<wind::ReferenceType>(parseTy(env));
     } else {
         std::string name = parseIdent();
         std::vector<std::shared_ptr<wind::Type>> parameters;

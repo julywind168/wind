@@ -28,7 +28,7 @@ public:
     virtual bool isStruct() { return false; }
     virtual bool isProtocol() { return false; }
 
-    std::shared_ptr<Type> toQuote();
+    std::shared_ptr<Type> ref();
     bool equalTo(std::shared_ptr<Type> other) {
         return hash() == other->hash();
     }

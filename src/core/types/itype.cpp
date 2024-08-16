@@ -1,16 +1,16 @@
 #include "itype.h"
 #include "primitives.h"
-#include "quote.h"
+#include "reference.h"
 
 namespace wind {
 
-std::shared_ptr<Type> Type::toQuote() {
-    return std::make_shared<QuoteType>(shared_from_this());
+std::shared_ptr<Type> Type::ref() {
+    return std::make_shared<ReferenceType>(shared_from_this());
 }
 
 std::shared_ptr<Type> Type::VOID(new VoidType());
 std::shared_ptr<Type> Type::BOOL(new BoolType());
-std::shared_ptr<Type> Type::PTR(Type::VOID->toQuote());
+std::shared_ptr<Type> Type::PTR(Type::VOID->ref());
 std::shared_ptr<Type> Type::I8(new I8Type());
 std::shared_ptr<Type> Type::I16(new I16Type());
 std::shared_ptr<Type> Type::I32(new I32Type());

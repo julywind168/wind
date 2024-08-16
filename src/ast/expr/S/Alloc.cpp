@@ -5,7 +5,7 @@ void Alloc::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
         size->markTy(wind::Type::U64);
     }
     size->typecheck(env, wind::Type::U64);
-    ty = std::make_shared<wind::QuoteType>(basicTy);
+    ty = std::make_shared<wind::ReferenceType>(basicTy);
     if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {
         panic(fmt::format("Alloc::typecheck failed, expected {}, but {}", expectedTy->toString(), ty ? ty->toString() : "void"));
     }
