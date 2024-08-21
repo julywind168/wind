@@ -20,7 +20,7 @@ std::string realString(std::string s) {
     return std::regex_replace(s, re, "\n");
 }
 
-llvm::Value* StrLit::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* StrLit::codegen(CompileCtx &ctx) {
     llvm::Constant *strConstant = llvm::ConstantDataArray::getString(*ctx.context, realString(value), /* add null */true);
     llvm::GlobalVariable *strGlobal = new llvm::GlobalVariable(
         *ctx.module,

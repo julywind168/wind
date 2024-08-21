@@ -62,8 +62,8 @@ public:
     virtual NodeType nodeTy() const = 0;
     virtual std::string toString() const = 0;
     virtual bool isLiteral() { return false; }
-    virtual llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) { return nullptr; }
-    virtual llvm::Value* getVariableAddress(CompileCtx &ctx, bool enableDeRef = true) { return nullptr; }
+    virtual llvm::Value* codegen(CompileCtx &ctx) { return nullptr; }
+    virtual llvm::Value* getVariableAddress(CompileCtx &ctx) { return nullptr; }
     virtual void typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy = nullptr) {
         if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {
             throw std::runtime_error(fmt::format("Expr::typecheck failed, expected {}, but {}", expectedTy->toString(), ty ? ty->toString() : "void"));
@@ -76,14 +76,6 @@ public:
 public:
     Meta mt = Meta();
     std::shared_ptr<wind::Type> ty = wind::Type::VOID;
-
-    std::shared_ptr<wind::Type> getTy() {
-        if (ty->isRef()) {
-            return ty->getElementTy();
-        } else {
-            return ty;
-        }
-    }
 
     std::string ty2Str() const {
         return ty ? "'" + ty->toString() : "";

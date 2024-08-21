@@ -19,7 +19,7 @@ public:
 
     void typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy = nullptr) override;
 
-    llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) override;
+    llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override {
         return fmt::format("(loop {}{} {})", init ? init->toString() + " " : "", test->toString(), body->toString());

@@ -39,24 +39,6 @@ llvm::Value* Identifier::createCall(CompileCtx &ctx, std::vector<std::shared_ptr
     }
 }
 
-llvm::Value* Identifier::getVariableAddress(CompileCtx &ctx, bool enableDeRef) {
-    if (symbol && symbol->ty == SymbolType::VARIABLE) {
-        auto addr = symbol->v.address;
-        if (ty->isPtr() && enableDeRef) {
-            return ctx.builder->CreateLoad(ctx.getTy(ty), addr, "ptr");
-        } else {
-            return addr;
-        }
-    } else {
-        return nullptr;
-    }
-}
-
-llvm::Value* Identifier::codegen(CompileCtx &ctx, bool enableDeRef) {
-    auto val = ctx.builder->CreateLoad(ctx.getTy(ty), symbol->v.address, name);
-    if (ty->isPtr() && enableDeRef) {
-        return ctx.builder->CreateLoad(ctx.getTy(ty->getElementTy()), val, "raw" + name);
-    } else {
-        return val;
-    }
+llvm::Value* Identifier::codegen(CompileCtx &ctx) {
+    return ctx.builder->CreateLoad(ctx.getTy(ty), symbol->v.address, name);
 }

@@ -32,10 +32,5 @@
     (printf "%d\n" t.1)
     (printf "%d\n" t.2)
     (printf "%f\n" -1.03)
-
-    (let ref 1''i32)
-    (let i (ref + 1))
-    (printf "i = %d\n" i)
-
     0
 })

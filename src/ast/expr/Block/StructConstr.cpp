@@ -30,7 +30,7 @@ Expr* StructConstr::findFieldExprByName(std::string name) {
     return nullptr;
 }
 
-llvm::Value* StructConstr::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* StructConstr::codegen(CompileCtx &ctx) {
     auto s = env->lookup(ty->getName());
     auto t = s->queryType(ty->getParameters());
 

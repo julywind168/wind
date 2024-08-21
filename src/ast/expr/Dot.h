@@ -23,9 +23,9 @@ public:
 
     llvm::Value* createCall(CompileCtx &ctx, std::vector<std::shared_ptr<wind::Type>> types, std::vector<llvm::Value*> args) override;
 
-    llvm::Value* getVariableAddress(CompileCtx &ctx, bool enableDeRef = true) override;
+    llvm::Value* getVariableAddress(CompileCtx &ctx) override;
 
-    llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) override;
+    llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override { return getName() + ty2Str(); }
 private:

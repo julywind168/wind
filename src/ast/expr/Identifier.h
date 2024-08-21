@@ -22,9 +22,11 @@ public:
 
     llvm::Value* createCall(CompileCtx &ctx, std::vector<std::shared_ptr<wind::Type>> types, std::vector<llvm::Value*> args) override;
 
-    llvm::Value* getVariableAddress(CompileCtx &ctx, bool enableDeRef = true) override;
+    llvm::Value* getVariableAddress(CompileCtx &ctx) override {
+        return (symbol && symbol->ty == SymbolType::VARIABLE) ? symbol->v.address: nullptr;
+    }
 
-    llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) override;
+    llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override { return name + ty2Str(); }
 private:

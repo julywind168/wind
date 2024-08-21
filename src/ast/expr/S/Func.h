@@ -39,7 +39,7 @@ public:
 
     llvm::Function* genfunc(CompileCtx &ctx, std::vector<std::shared_ptr<wind::Type>> types) override;
 
-    llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) override;
+    llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override {
         return fmt::format("func {} -> {}", callee->toString(), body->toString());

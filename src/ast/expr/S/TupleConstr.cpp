@@ -13,7 +13,7 @@ void TupleConstr::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type
     }
 }
 
-llvm::Value* TupleConstr::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* TupleConstr::codegen(CompileCtx &ctx) {
     llvm::StructType* structTy = ctx.getStructTy(ty);
     llvm::Value *instance = ctx.builder->CreateAlloca(structTy, nullptr, "tuple");
     for (size_t i = 0; i < elements.size(); i++) {

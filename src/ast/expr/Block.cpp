@@ -15,7 +15,7 @@ void Block::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     }
 }
 
-llvm::Value* Block::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* Block::codegen(CompileCtx &ctx) {
     llvm::Value* ret = nullptr;
     for (auto& expr : exprs) {
         ret = expr->codegen(ctx);

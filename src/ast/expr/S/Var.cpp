@@ -24,7 +24,7 @@ void Var::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expect
     }
 }
 
-llvm::Value* Var::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* Var::codegen(CompileCtx &ctx) {
     llvm::AllocaInst *address = ctx.builder->CreateAlloca(ctx.getTy(hintTy), nullptr, name);
     symbol->v.address = address;
     llvm::Value* value = init->codegen(ctx);

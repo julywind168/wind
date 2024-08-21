@@ -1,12 +1,9 @@
 #include "IntLit.h"
 
-bool isIntergerRef(std::shared_ptr<wind::Type> ty) {
-    return ty->isPtr() && ty->getElementTy() && ty->getElementTy()->isInteger();
-}
 
 void IntLit::markTy(std::shared_ptr<wind::Type> ty) {
-    if (!ty->isInteger() && !isIntergerRef(ty)) {
-        panic("IntLit only accept interger or ref of interger, but got " + ty->toString());
+    if (!ty->isInteger()) {
+        panic("IntLit only accept `i8 i16 i32 i64` or `u8 u16 u32 u64`, but got " + ty->toString());
     }
     this->ty = ty;
     marked = true;
@@ -27,13 +24,6 @@ void IntLit::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> exp
     }
 }
 
-llvm::Value* IntLit::codegen(CompileCtx &ctx, bool enableDeRef) {
-    auto val = llvm::ConstantInt::get(ctx.getTy(ty), value, ty->isPtr() ? ty->getElementTy()->isSigned() : ty->isSigned());
-    if (ty->isPtr()) {
-        auto inst = ctx.mallocInstance(ctx.getTy(ty), "ptr");
-        ctx.builder->CreateStore(val, inst);
-        return inst;
-    } else {
-        return val;
-    }
+llvm::Value* IntLit::codegen(CompileCtx &ctx) {
+    return llvm::ConstantInt::get(ctx.getTy(ty), value, ty->isSigned());
 }

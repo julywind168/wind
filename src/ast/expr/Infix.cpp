@@ -22,12 +22,12 @@ void Infix::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
         auto other = who == left ? right : left;
         if (!who->isLiteral() && other->isLiteral()) {
             who->typecheck(env);
-            other->typecheck(env, who->getTy()); // literal can conditional cast to another, if types dismatch
+            other->typecheck(env, who->ty); // literal can conditional cast to another, if types dismatch
         } else {
             left->typecheck(env);
             right->typecheck(env);
         }
-        ty = who->getTy();
+        ty = who->ty;
         // todo check types
     } else if (isLogicalOp(op)) {
         ty = wind::Type::BOOL;
@@ -41,7 +41,7 @@ void Infix::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     } else {
         panic("Invalid infix op:" + op);
     }
-    if (!isEqual(left->getTy(), right->getTy())) {
+    if (!isEqual(left->ty, right->ty)) {
         panic(fmt::format("Infix::typecheck: type mismatch left:{}, right:{}", left->ty->toString(), right->ty->toString()));
     }
     if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {
@@ -80,7 +80,7 @@ llvm::Instruction::BinaryOps Infix::getOpc() {
     return llvm::Instruction::BinaryOps::Or;
 }
 
-llvm::Value* Infix::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* Infix::codegen(CompileCtx &ctx) {
     llvm::Value *l = left->codegen(ctx);
     llvm::Value *r = right->codegen(ctx);
     if (l && r) {

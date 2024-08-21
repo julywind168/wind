@@ -11,6 +11,6 @@ void Sizeof::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> exp
     }
 }
 
-llvm::Value* Sizeof::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* Sizeof::codegen(CompileCtx &ctx) {
     return ctx.builder->getInt64(ctx.getTypeSize(ctx.getTy(type)));
 }

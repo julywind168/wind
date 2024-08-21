@@ -22,7 +22,7 @@ public:
 
     llvm::CmpInst::Predicate getCmpPred();
 
-    llvm::Value* codegen(CompileCtx &ctx, bool enableDeRef = true) override;
+    llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override {
         return "(" + left->toString() + " " + op + " " + right->toString() + ")" + ty2Str();

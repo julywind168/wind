@@ -14,7 +14,7 @@ void Cast::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expec
     }
 }
 
-llvm::Value* Cast::codegen(CompileCtx &ctx, bool enableDeRef) {
+llvm::Value* Cast::codegen(CompileCtx &ctx) {
     auto srcTy = source->ty;
     auto val = source->codegen(ctx);
     if (dstTy->isInteger() && srcTy->isFloat()) {
