@@ -23,7 +23,7 @@ a || b  // 逻辑或
 3. Block表达式, Block 它包含一组表达式，它会返回其中最后一个表达式的值, 通常用于函数体, if 分支, 循环体。
 ```lisp
 {
-    (var x 1)
+    (var x = 1)
     x + 1
 }   // 该 Block 的值为 `x + 1`, 即 2 
 ```
@@ -44,20 +44,20 @@ wind 语言是静态类型的, 基本类型有 bool, i8, i16, i32, i64, u8, u16,
 字面表达式可以缺省标注，比如 1 不标注的话默认为 `i32`, 1.0 为 `f64`
 ```
 // 变量定义
-(var x 1)
-(var x 1'i8)
+(var x = 1)
+(var x = 1'i8)
 
 // 定义常量, let 表示该变量无法被更改
-(let x 1)
+(let x = 1)
 
 // 定义一个 bool 变量
-(var b (!true && true || false))
+(var b = (!true && true || false))
 ```
 
 ## 赋值? 匹配？
 wind 也许会借鉴 [Elixir 模式匹配](https://hexdocs.pm/elixir/pattern-matching.html)
 ```
-(var x 1)
+(var x = 1)
 (x = 2)
 ```
 
@@ -68,9 +68,9 @@ wind 也许会借鉴 [Elixir 模式匹配](https://hexdocs.pm/elixir/pattern-mat
 
 
 // 定义一个函数
-(func (foo a'i32 b'i32)'i32 {
-    (let x (a + b))
-    (let y (a - b))
+(func (foo a'i32 b'i32)'i32 -> {
+    (let x = (a + b))
+    (let y = (a - b))
     (x + y)
 })
 ```
@@ -131,7 +131,7 @@ test 表达式必须是 bool 类型
 
 注意: match 表达式 是有返回值的。 可以看到 match 与 cond 表达式很像，但更简洁。
 ```
-(var x 1)
+(var x = 1)
 
 (match x 
     1 => (print "x == 1")
@@ -157,6 +157,11 @@ struct 用来定义自己的类型，类似于 C 的 struct
         (self.y = y)
     })
 )
+```
+
+# 匿名函数 (closure)
+```
+(x'i32 y'i32)'i32 -> x + y
 ```
 
 ## 其他

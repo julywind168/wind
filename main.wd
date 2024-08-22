@@ -3,31 +3,31 @@
 (extern (realloc p'ptr size'u64)'ptr)
 
 (impl u64
-    (func (to_i32 self)'i32 (cast i32 self))
+    (func (to_i32 self)'i32 -> (cast i32 self))
 )
 
 (struct array<T> (data''T, size'u64, capacity'u64))
 
 (impl array<T>
-    (func (append self value'T) {
+    (func (append self value'T) -> {
         (self.adjust self.size + 1)
         (self.data[(self.size.to_i32)] = value)
         (self.size = self.size + 1)
     })
 
-    (func (adjust self size'u64) {
+    (func (adjust self size'u64) -> {
         (if size > self.capacity {
             (self.capacity = self.capacity * 2)
             (self.data = (realloc self.data self.capacity * (sizeof T)))
         })
     })
 
-    (func (__index self index'i32)'T self.data[index])
-    (func (__newindex self index'i32 value'T) (self.data[index] = value))
+    (func (__index self index'i32)'T -> self.data[index])
+    (func (__newindex self index'i32 value'T) -> self.data[index] = value)
 )
 
-(func (main)'i32 {
-    (let t (1, 2, 3))
+(func (main)'i32 -> {
+    (let t = (1, 2, 3))
     (printf "%d\n" t.0)
     (printf "%d\n" t.1)
     (printf "%d\n" t.2)

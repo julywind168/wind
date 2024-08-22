@@ -3,7 +3,7 @@
 std::unique_ptr<Expr> Parser::parseSExpr(std::shared_ptr<Env> env) {
     auto ident = peek()->value;
     if (ident == "func") {
-        return parseFunc(env);
+        return parseFunc(env, true);
     } else if (ident == "extern") {
         return parseExtern(env);
     } else if (ident == "if") {
@@ -79,13 +79,17 @@ std::unique_ptr<Expr> Parser::parseGenericsCall(std::shared_ptr<Env> env) {
     return std::make_unique<Call>(std::move(callable), generics, std::move(params));
 }
 
-// (func (foo x'i32 y'i32)'i32 (x + y))
-std::unique_ptr<Func> Parser::parseFunc(std::shared_ptr<Env> env, std::vector<std::shared_ptr<wind::BoxedType>> structGenerics) {
+// (func (foo x'i32 y'i32)'i32 -> (x + y))
+std::unique_ptr<Func> Parser::parseFunc(std::shared_ptr<Env> env, bool requiredBody, std::vector<std::shared_ptr<wind::BoxedType>> structGenerics) {
     eat('(');
     eat("func");
     auto myEnv = std::make_shared<Env>(env);
     auto callee = parseCallee(myEnv, structGenerics);
-    auto body = parseExpr(myEnv);
+    std::unique_ptr<Expr> body = nullptr;
+    if (requiredBody) {
+        eat("->");
+        body = parseExpr(myEnv);
+    }
     eat(')');
     auto e = std::make_unique<Func>(myEnv, callee, std::move(body));
     env->define(callee->name, Symbol::function_(callee->name, e.get()));
@@ -123,6 +127,7 @@ std::unique_ptr<Expr> Parser::parseVar(std::shared_ptr<Env> env) {
     auto const_ = advance() == "let";
     auto name = parseIdent();
     auto hintTy = tryParseMarkedTy(env);
+    eat('=');
     auto init = parseExpr(env);
     if (!init) {
         throw std::runtime_error("Var expected `(var/let name init)`");
@@ -273,7 +278,7 @@ std::unique_ptr<Expr> Parser::parseImpl(std::shared_ptr<Env> env) {
     }
 
     while (curTk->is('(')) {
-        auto f = parseFunc(myEnv, structGenerics);
+        auto f = parseFunc(myEnv, true, structGenerics);
         if (f) {
             funcs.push_back(std::move(f));
         } else {
@@ -319,7 +324,7 @@ std::unique_ptr<Expr> Parser::parseProtocol(std::shared_ptr<Env> env) {
     auto name = parseIdent();
     std::vector<std::shared_ptr<Callee>> callees;
     while (curTk->is('(')) {
-        auto f = parseFunc(env);
+        auto f = parseFunc(env, false);
         if (f) {
             f->callee->markSelfTy(wind::Type::PTR);
             callees.push_back(f->callee);

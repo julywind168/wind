@@ -45,7 +45,7 @@ private:
     // S exprs
     std::unique_ptr<Expr> parseGenericsCall(std::shared_ptr<Env> env);
     std::shared_ptr<Callee> parseCallee(std::shared_ptr<Env> env, std::vector<std::shared_ptr<wind::BoxedType>> structGenerics = {});
-    std::unique_ptr<Func> parseFunc(std::shared_ptr<Env> env, std::vector<std::shared_ptr<wind::BoxedType>> structGenerics = {});
+    std::unique_ptr<Func> parseFunc(std::shared_ptr<Env> env, bool requireBody, std::vector<std::shared_ptr<wind::BoxedType>> structGenerics = {});
     std::unique_ptr<Expr> parseExtern(std::shared_ptr<Env> env);
     std::unique_ptr<Expr> parseIf(std::shared_ptr<Env> env);
     std::unique_ptr<Expr> parseVar(std::shared_ptr<Env> env);
