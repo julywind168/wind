@@ -22,8 +22,8 @@
         })
     })
 
-    (func (__index__ self index'i32)'T self.data[index])
-    (func (__newindex__ self index'i32 value'T) (self.data[index] = value))
+    (func (__index self index'i32)'T self.data[index])
+    (func (__newindex self index'i32 value'T) (self.data[index] = value))
 )
 
 (func (main)'i32 {

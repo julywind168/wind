@@ -29,12 +29,12 @@ void Equal::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     }
 }
 
-// `root[key] = value` => (root.__newindex__ key value)
+// `root[key] = value` => (root.__newindex key value)
 std::unique_ptr<Expr> Equal::createNewIndexCall() {
     auto isNewIndexCall = [&](std::string tyName) {
         if (auto s = env->lookup(tyName)) {
             if(s->ty == SymbolType::TYPE) {
-                if (s->t.findMethod("__newindex__")) {
+                if (s->t.findMethod("__newindex")) {
                     return true;
                 }
             }
@@ -45,8 +45,8 @@ std::unique_ptr<Expr> Equal::createNewIndexCall() {
     if (left->nodeTy() == NodeType::INDEX) {
         auto l = (Index*)left.get();
         if (isNewIndexCall(l->root->ty->getName())) {
-            std::string code = fmt::format("({}.__newindex__ {} {})", l->root->getSourceCode(), l->key->getSourceCode(), right->getSourceCode());
-            return parseString(env, "__newindex__", code);
+            std::string code = fmt::format("({}.__newindex {} {})", l->root->getSourceCode(), l->key->getSourceCode(), right->getSourceCode());
+            return parseString(env, "__newindex", code);
         }
     }
     return nullptr;

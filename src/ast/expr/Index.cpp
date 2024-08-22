@@ -11,7 +11,7 @@ void Index::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     key->typecheck(env, wind::Type::I32);
     if (auto s = env->lookup(root->ty->getName())) {
         if(s->ty == SymbolType::TYPE) {
-            if (auto m = s->t.findMethod("__index__")) {
+            if (auto m = s->t.findMethod("__index")) {
                 ty = m->getCallee_()->retTy;
                 isIndexCall = true;
             }
@@ -30,10 +30,10 @@ llvm::Value* Index::getVariableAddress(CompileCtx &ctx) {
 }
 
 
-// root[key] => (root.__index__ key)
+// root[key] => (root.__index key)
 std::unique_ptr<Expr> Index::createIndexCall() {
-    std::string code = "(" + root->getSourceCode() + ".__index__ " + key->getSourceCode() + ")";
-    return parseString(env, "__index__", code);
+    std::string code = "(" + root->getSourceCode() + ".__index " + key->getSourceCode() + ")";
+    return parseString(env, "__index", code);
 }
 
 llvm::Value* Index::codegen(CompileCtx &ctx) {
