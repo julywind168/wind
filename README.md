@@ -21,7 +21,7 @@ Wiki [Wind入门指南](https://github.com/julywind168/wind/wiki/Guides)
 brew install llvm libgc
 mkdir build && cd build
 cmake -G Ninja ..
-ninga
+ninja
 mv wind ../wind && cd ..
 ./wind run main.wd
 ```
