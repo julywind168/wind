@@ -6,7 +6,7 @@ Wind 是一种静态类型，通用编译型语言，它旨在提供一流的 ji
 (extern (printf fmt''u8 ...))
 
 (func (main)'i32 {
-    (let a [1, 2, 3])
+    (let a = [1, 2, 3])
     (loop (var i 0) i < 3 {
         (printf "hello world %d\n" a[i])
     })
@@ -60,7 +60,7 @@ mv wind ../wind && cd ..
 6. 一流的 jit (增量编译 & 热更新), 该功能以库的形式提供。比如：
 ```lisp
 (func (main)'i32 {
-    (let jit (jit:new))
+    (let jit = (jit:new))
     (jit.load "(func (foo) (printf \"fxx\n\"))")
     (jit.load "(func (main)'i32 (foo))")
     (jit.eval) // 输出: fxx
