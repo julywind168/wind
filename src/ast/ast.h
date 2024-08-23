@@ -32,6 +32,8 @@
 #include "expr/S/Alloc.h"
 #include "expr/S/Sizeof.h"
 #include "expr/S/Cast.h"
+#include "expr/S/Load.h"
+#include "expr/S/Store.h"
 #include "expr/S/TupleConstr.h"
 
 #include "expr/Block/StructConstr.h"

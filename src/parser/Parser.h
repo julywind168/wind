@@ -57,6 +57,8 @@ private:
     std::unique_ptr<Expr> parseSizeof(std::shared_ptr<Env> env);
     std::unique_ptr<Expr> parseAlloc(std::shared_ptr<Env> env);
     std::unique_ptr<Expr> parseCast(std::shared_ptr<Env> env);
+    std::unique_ptr<Expr> parseLoad(std::shared_ptr<Env> env);
+    std::unique_ptr<Expr> parseStore(std::shared_ptr<Env> env);
     std::unique_ptr<Expr> parseTupleConstr(std::shared_ptr<Env> env, std::unique_ptr<Expr> first);
 
     // Block exprs

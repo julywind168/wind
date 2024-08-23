@@ -4,6 +4,7 @@
 #include "ast/expr/Expr.h"
 
 
+// (alloc type [size])
 class Alloc : public Expr {
     std::shared_ptr<wind::Type> basicTy;
     std::unique_ptr<Expr> size;
@@ -16,7 +17,7 @@ public:
     llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override {
-        return "(alloc " + basicTy->toString() + " " + size->toString() + ")";
+        return "(alloc " + basicTy->toString() + (size ? " " + size->toString() : "") + ")";
     }
 };
 

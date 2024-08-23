@@ -46,6 +46,8 @@ set(SOURCE_FILES
     src/ast/expr/S/Alloc.cpp
     src/ast/expr/S/Sizeof.cpp
     src/ast/expr/S/Cast.cpp
+    src/ast/expr/S/Load.cpp
+    src/ast/expr/S/Store.cpp
     src/ast/expr/S/TupleConstr.cpp
 
     src/ast/expr/Block/StructConstr.cpp
@@ -65,7 +67,6 @@ set(SOURCE_FILES
     src/core/Type.cpp
     src/core/CompileCtx.cpp
     src/core/Core.cpp
-
 
     # compiler
     src/compiler/Compiler.cpp

@@ -37,6 +37,8 @@ enum class NodeType {
     ALLOC,
     SIZEOF,
     CAST,
+    LOAD,
+    STORE,
     // Atoms
     IDENTIFIER,
     DOT,        // extend identifier

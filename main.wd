@@ -3,7 +3,7 @@
 (extern (realloc p'ptr size'u64)'ptr)
 
 (impl u64
-    (func (to_i32 self)'i32 -> (cast i32 self))
+    (func (to_i32 self)'i32 -> (cast self to i32))
 )
 
 (struct array<T> (data''T, size'u64, capacity'u64))
@@ -32,5 +32,11 @@
     (printf "%d\n" t.1)
     (printf "%d\n" t.2)
     (printf "%f\n" -1.03)
+
+    // test ptr
+    (let ptr = (alloc i32))
+    (store 1024 to ptr)
+    (let v = (load i32 from ptr))
+    (printf "v = %d\n" v)
     0
 })

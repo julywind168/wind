@@ -26,6 +26,10 @@ std::unique_ptr<Expr> Parser::parseSExpr(std::shared_ptr<Env> env) {
         return parseAlloc(env);
     } else if (ident == "cast") {
         return parseCast(env);
+    } else if (ident == "load") {
+        return parseLoad(env);
+    } else if (ident == "store") {
+        return parseStore(env);
     } else {
         if (peek(2)->value == "<" && peek(2)->hasPrecedingSpace == false) {
             return parseGenericsCall(env);
@@ -348,7 +352,7 @@ std::unique_ptr<Expr> Parser::parseSizeof(std::shared_ptr<Env> env) {
     return std::make_unique<Sizeof>(std::move(ty));
 }
 
-// (alloc type size)
+// (alloc type [size])
 std::unique_ptr<Expr> Parser::parseAlloc(std::shared_ptr<Env> env) {
     eat('(');
     eat("alloc");
@@ -358,12 +362,37 @@ std::unique_ptr<Expr> Parser::parseAlloc(std::shared_ptr<Env> env) {
     return std::make_unique<Alloc>(ty, std::move(size));
 }
 
-// (cast dstTy source)
+// (load type from address [offset])
+std::unique_ptr<Expr> Parser::parseLoad(std::shared_ptr<Env> env) {
+    eat('(');
+    eat("load");
+    auto ty = parseTy(env);
+    eat("from");
+    auto address = parseExpr(env);
+    auto offset = parseExpr(env);
+    eat(')');
+    return std::make_unique<Load>(ty, std::move(address), std::move(offset));
+}
+
+// (store value to address [offset])
+std::unique_ptr<Expr> Parser::parseStore(std::shared_ptr<Env> env) {
+    eat('(');
+    eat("store");
+    auto value = parseExpr(env);
+    eat("to");
+    auto address = parseExpr(env);
+    auto offset = parseExpr(env);
+    eat(')');
+    return std::make_unique<Store>(std::move(value), std::move(address), std::move(offset));
+}
+
+// (cast source to dstTy)
 std::unique_ptr<Expr> Parser::parseCast(std::shared_ptr<Env> env) {
     eat('(');
     eat("cast");
-    auto dstTy = parseTy(env);
     auto source = parseExpr(env);
+    eat("to");
+    auto dstTy = parseTy(env);
     eat(')');
     return std::make_unique<Cast>(dstTy, std::move(source));
 }

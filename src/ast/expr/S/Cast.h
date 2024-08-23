@@ -17,7 +17,7 @@ public:
     llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override {
-        return "(cast " + dstTy->toString() + " source: " + source->toString() + ")";
+        return "(cast " + source->toString() + " to " + dstTy->toString() + ")";
     }
 };
 

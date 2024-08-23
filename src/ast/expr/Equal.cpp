@@ -60,6 +60,5 @@ llvm::Value* Equal::codegen(CompileCtx &ctx) {
         auto address = (llvm::AllocaInst*)left->getVariableAddress(ctx);
         auto value = right->codegen(ctx);
         return ctx.builder->CreateStore(value, address);
-        return llvm::ConstantInt::get(ctx.getTy(ty), true);
     }
 }
