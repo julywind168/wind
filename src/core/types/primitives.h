@@ -21,6 +21,14 @@ public:
     std::string toString() override { return "void"; }
 };
 
+class PtrType : public PrimitiveType {
+public:
+    PtrType() {}
+    bool isVoidPtr() override { return true; }
+    bool isPtr() override { return true; }
+    std::string toString() override { return "ptr"; }
+};
+
 
 class BoolType : public PrimitiveType {
 public:

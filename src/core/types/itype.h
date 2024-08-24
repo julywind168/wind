@@ -19,6 +19,7 @@ public:
     virtual bool isVoid() { return false; }
     virtual bool isVoidPtr() { return false; }
     virtual bool isPtr() { return false; }
+    virtual bool isRef() { return false; }
     virtual bool isBool() { return false; }
     virtual bool isSigned() { return false; }
     virtual bool isUnsigned() { return false; }
