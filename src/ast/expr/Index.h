@@ -17,15 +17,12 @@ public:
 
     void typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy = nullptr) override;
 
-    llvm::Value* getVariableAddress(CompileCtx &ctx) override;
-
     llvm::Value* codegen(CompileCtx &ctx) override;
 
     std::string toString() const override { return root->getIdent() + "[" + key->toString() + "]" + ty2Str(); }
 
 private:
     std::shared_ptr<Env> env;
-    bool isIndexCall = false;
     std::unique_ptr<Expr> createIndexCall();
 };
 

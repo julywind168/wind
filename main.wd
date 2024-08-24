@@ -1,4 +1,4 @@
-(extern (printf s''u8 ...))
+(extern (printf fmt'ptr ...))
 (extern (malloc size'u64)'ptr)
 (extern (realloc p'ptr size'u64)'ptr)
 
@@ -6,12 +6,12 @@
     (func (to_i32 self)'i32 -> (cast self to i32))
 )
 
-(struct array<T> (data''T, size'u64, capacity'u64))
+(struct array<T> (data'ptr, size'u64, capacity'u64))
 
 (impl array<T>
     (func (append self value'T) -> {
         (self.adjust self.size + 1)
-        (self.data[(self.size.to_i32)] = value)
+        (store value to self.data (self.size.to_i32))
         (self.size = self.size + 1)
     })
 
@@ -22,16 +22,22 @@
         })
     })
 
-    (func (__index self index'i32)'T -> self.data[index])
-    (func (__newindex self index'i32 value'T) -> self.data[index] = value)
+    (func (__index self index'i32)'T -> (load T from self.data index))
+    (func (__newindex self index'i32 value'T) -> (store value to self.data index))
 )
 
 (func (main)'i32 -> {
+    // test tuple
     (let t = (1, 2, 3))
-    (printf "%d\n" t.0)
-    (printf "%d\n" t.1)
-    (printf "%d\n" t.2)
-    (printf "%f\n" -1.03)
+    (printf "t.0 = %d\n" t.0)
+    (printf "t.1 = %d\n" t.1)
+    (printf "t.2 = %d\n" t.2)
+
+    // test array
+    (let a = [1, 2, 3])
+    (printf "a[0] = %d\n" a[0])
+    (printf "a[1] = %d\n" a[1])
+    (printf "a[2] = %d\n" a[2])
 
     // test ptr
     (let ptr = (alloc i32))

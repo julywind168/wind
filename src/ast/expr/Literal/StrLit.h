@@ -8,7 +8,7 @@ class StrLit : public Expr {
     std::string value;
 public:
     StrLit(std::string v) : value(v) {
-        ty = wind::Type::U8->ref();
+        ty = wind::Type::PTR;
     }
 
     bool isLiteral() override { return true; }

@@ -54,7 +54,7 @@ void ArrayConstr::initCtor() {
     auto num = nextPowerOf2(elements.size());
 
     writeln("{");
-    writeln(fmt::format("(let tmp {{data: (malloc {} * (sizeof {})), size: 0, capacity: {}}}'{})", num, ety, num, aty));
+    writeln(fmt::format("(let tmp = {{data: (malloc {} * (sizeof {})), size: 0, capacity: {}}}'{})", num, ety, num, aty));
     for (auto &e : elements) {
         writeln(fmt::format("(tmp.append {})", e->getSourceCode()));
     }

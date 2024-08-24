@@ -13,20 +13,15 @@ void Index::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
         if(s->ty == SymbolType::TYPE) {
             if (auto m = s->t.findMethod("__index")) {
                 ty = m->getCallee_()->retTy;
-                isIndexCall = true;
             }
         }
     }
-    if (!isIndexCall) {
-        ty = root->ty->getElementTy();
+    if (ty->isVoid()) {
+        panic("Index::typecheck failed, can't find method `__index`");
     }
     if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {
         panic(fmt::format("Index::typecheck failed, expected {}, but {}", expectedTy->toString(), ty ? ty->toString() : "void"));
     }
-}
-
-llvm::Value* Index::getVariableAddress(CompileCtx &ctx) {
-    return ctx.builder->CreateInBoundsGEP(ctx.getTy(ty), root->codegen(ctx), key->codegen(ctx));
 }
 
 
@@ -37,12 +32,7 @@ std::unique_ptr<Expr> Index::createIndexCall() {
 }
 
 llvm::Value* Index::codegen(CompileCtx &ctx) {
-    if (isIndexCall) {
-        auto call = createIndexCall();
-        call->typecheck(env, ty);
-        return call->codegen(ctx);
-    } else {
-        auto addr = getVariableAddress(ctx);
-        return ctx.builder->CreateLoad(ctx.getTy(ty), addr);
-    }
+    auto call = createIndexCall();
+    call->typecheck(env, ty);
+    return call->codegen(ctx);
 }
