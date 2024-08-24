@@ -16,6 +16,12 @@ contexts:
       scope: punctuation.definition.string.begin.wind
       push: double_quoted_string
 
+    - match: '->'
+      scope: keyword.operator.arrow.wind
+
+    - match: '=>'
+      scope: keyword.operator.arrow.wind
+
     - match: (?://|[-+*/%^])
       scope: keyword.operator.arithmetic.wind
 
