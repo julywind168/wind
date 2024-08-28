@@ -93,6 +93,8 @@ public:
 
     void define(std::string name, std::shared_ptr<Symbol> s);
     Symbol* lookup(std::string name);
+    IFunc* lookupMeatFunc(std::string tyName, std::string funcName);
+    void onClose(CompileCtx &ctx, std::string excepted = "");
 
 private:
     std::map<std::string, std::shared_ptr<Symbol>> symbols;

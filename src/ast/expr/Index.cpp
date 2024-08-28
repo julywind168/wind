@@ -9,14 +9,9 @@ void Index::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     this->env = env;
     root->typecheck(env);
     key->typecheck(env, wind::Type::I32);
-    if (auto s = env->lookup(root->ty->getName())) {
-        if(s->ty == SymbolType::TYPE) {
-            if (auto m = s->t.findMethod("__index")) {
-                ty = m->getCallee_()->retTy;
-            }
-        }
-    }
-    if (ty->isVoid()) {
+    if (auto m = env->lookupMeatFunc(root->ty->getName(), "__index")) {
+        ty = m->getCallee_()->retTy;
+    } else {
         panic("Index::typecheck failed, can't find method `__index`");
     }
     if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {

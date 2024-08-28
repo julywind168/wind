@@ -47,6 +47,8 @@ llvm::Function* Func::genfunc(CompileCtx &ctx, std::vector<std::shared_ptr<wind:
     }
     auto ret = body->codegen(ctx);
 
+    env->onClose(ctx);
+
     if (callee->retTy->isVoid()) {
         ctx.builder->CreateRetVoid();
     } else {

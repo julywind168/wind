@@ -1,5 +1,6 @@
 #include "Env.h"
-#include "ast/expr/S/Callee.h"
+#include "ast/expr/Expr.h"
+
 
 void Type_::switchTypes(std::vector<std::shared_ptr<wind::Type>> types) {
     if (types.size() != generics.size()) {
@@ -52,4 +53,27 @@ Symbol* Env::lookup(std::string name) {
         return parent->lookup(name);
     }
     return nullptr;
+}
+
+IFunc* Env::lookupMeatFunc(std::string tyName, std::string funcName) {
+    if (auto s = lookup(tyName)) {
+        if(s->ty == SymbolType::TYPE) {
+            return s->t.findMethod(funcName);
+        }
+    }
+    return nullptr;
+}
+
+void Env::onClose(CompileCtx &ctx, std::string excepted) {
+    for (auto& [name, s] : symbols) {
+        if (name != excepted && s->ty == SymbolType::VARIABLE) {
+            if (this->lookupMeatFunc(s->v.ty->getName(), "__close")) {
+                std::string code = fmt::format("({}.__close)", name);
+                auto env = this->shared_from_this();
+                auto close = parseString(env, "__close", code);
+                close->typecheck(env);
+                close->codegen(ctx);
+            }
+        }
+    }
 }

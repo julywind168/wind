@@ -1,4 +1,5 @@
 #include "Block.h"
+#include "Identifier.h"
 
 void Block::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy) {
     myEnv = std::make_shared<Env>(env);
@@ -17,8 +18,13 @@ void Block::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
 
 llvm::Value* Block::codegen(CompileCtx &ctx) {
     llvm::Value* ret = nullptr;
+    std::string retVarName = "";
     for (auto& expr : exprs) {
         ret = expr->codegen(ctx);
+        if (ret && expr->nodeTy() == NodeType::IDENTIFIER) {
+            retVarName = ((Identifier*)(expr.get()))->getIdent();
+        }
     }
+    myEnv->onClose(ctx, retVarName);
     return ret;
 }
