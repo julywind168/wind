@@ -64,7 +64,7 @@ IFunc* Env::lookupMeatFunc(std::string tyName, std::string funcName) {
     return nullptr;
 }
 
-void Env::onClose(CompileCtx &ctx, std::string excepted) {
+void Env::close(CompileCtx &ctx, std::string excepted) {
     for (auto& [name, s] : symbols) {
         if (name != excepted && s->ty == SymbolType::VARIABLE) {
             if (this->lookupMeatFunc(s->v.ty->getName(), "__close")) {

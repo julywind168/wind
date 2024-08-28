@@ -25,6 +25,6 @@ llvm::Value* Block::codegen(CompileCtx &ctx) {
             retVarName = ((Identifier*)(expr.get()))->getIdent();
         }
     }
-    myEnv->onClose(ctx, retVarName);
+    myEnv->close(ctx, retVarName);
     return ret;
 }
