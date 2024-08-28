@@ -1,10 +1,10 @@
-(extern (printf s''u8 ...))
+(extern (printf fmt'ptr ...))
 (extern (do_socket)'i32)
 (extern (do_bind s'i32 port'i32)'i32)
 (extern (do_listen s'i32)'i32)
 (extern (do_accept s'i32)'i32)
-(extern (c_write fd'i32 buf''u8 start'i32 n'i32)'i32)
-(extern (c_read fd'i32 buf''u8 start'i32 n'i32)'i32)
+(extern (c_write fd'i32 buf'ptr start'i32 n'i32)'i32)
+(extern (c_read fd'i32 buf'ptr start'i32 n'i32)'i32)
 
 
 (func (main)'i32 -> {
@@ -17,7 +17,7 @@
 
     (loop (var quit = false) quit != true {
         (let n = (c_read fd buf 0 1023))
-        (buf[n] = 0'u8)
+        (store 0'u8 to buf n)
         (if n <= 0 {
             (printf "error: %d\n" n)
             quit = true
