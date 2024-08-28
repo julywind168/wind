@@ -34,22 +34,14 @@ llvm::Value* StructConstr::codegen(CompileCtx &ctx) {
     auto s = env->lookup(ty->getName());
     auto t = s->queryType(ty->getParameters());
 
-    llvm::StructType* structTy = ctx.getStructTy(ty->isPtr() ? ty->getElementTy() : ty);
-    llvm::Value *instance;
-    if (ty->isPtr()) {
-        instance = ctx.mallocInstance(structTy, toLowerCase(ty->getName()));
-    } else {
-        instance = ctx.builder->CreateAlloca(structTy, nullptr, toLowerCase(ty->getName()));
-    }
+    llvm::StructType* structTy = ctx.getStructTy(ty);
+    llvm::Value *instance = ctx.builder->CreateAlloca(structTy, nullptr, toLowerCase(ty->getName()));
+
     for (auto& f : t->fields) {
         auto init = findFieldExprByName(f.name);
         auto value = init->codegen(ctx);
         auto address = ctx.builder->CreateStructGEP(structTy, instance, f.index);
         ctx.builder->CreateStore(value, address);
     }
-    if (ty->isPtr()) {
-        return instance;
-    } else {
-        return ctx.builder->CreateLoad(structTy, instance, toLowerCase(ty->getName()));
-    }
+    return ctx.builder->CreateLoad(structTy, instance, toLowerCase(ty->getName()));
 }

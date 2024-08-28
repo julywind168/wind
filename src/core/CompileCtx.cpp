@@ -48,14 +48,6 @@ llvm::Align CompileCtx::getStructAlign(llvm::StructType *ty) {
     return module->getDataLayout().getStructLayout(ty)->getAlignment();
 };
 
-llvm::Value *CompileCtx::mallocInstance(llvm::Type *ty, const std::string &name, llvm::Value *num) {
-    llvm::Value* size = builder->getInt64(getTypeSize(ty));
-    if (num) {
-        size = builder->CreateMul(size, num);
-    }
-    auto instance = builder->CreateCall(module->getFunction("GC_malloc"), size, name);
-    return instance;
-}
 
 llvm::Type* CompileCtx::getVoidPtrTy() {
     return llvm::Type::getInt8Ty(*context)->getPointerTo();
@@ -141,6 +133,5 @@ void CompileCtx::setupInternalTypes() {
 }
 
 void CompileCtx::setupExternFunctions() {
-    auto ptrTy = llvm::Type::getInt8Ty(*context)->getPointerTo();
-    module->getOrInsertFunction("GC_malloc", llvm::FunctionType::get(ptrTy, llvm::Type::getInt64Ty(*context), false));
+    // pass
 }

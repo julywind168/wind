@@ -1,6 +1,7 @@
 (extern (printf fmt'ptr ...))
 (extern (malloc size'u64)'ptr)
 (extern (realloc p'ptr size'u64)'ptr)
+(extern (free p'ptr))
 
 (impl u64
     (func (to_i32 self)'i32 -> (cast self to i32))
@@ -18,12 +19,14 @@
     (func (adjust self size'u64) -> {
         (if size > self.capacity {
             (self.capacity = self.capacity * 2)
+            // todo: check error
             (self.data = (realloc self.data self.capacity * (sizeof T)))
         })
     })
 
     (func (__index self index'i32)'T -> (load T from self.data index))
     (func (__newindex self index'i32 value'T) -> (store value to self.data index))
+    (func (__close self) -> (free self.data))
 )
 
 (func (main)'i32 -> {

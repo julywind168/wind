@@ -2,7 +2,7 @@
 #define WIND_RUNTIME_H
 
 #include <stddef.h>
-#include <gc/gc.h>
+#include <cstdlib>
 
 
 #ifdef _WIN32

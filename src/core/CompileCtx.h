@@ -43,7 +43,6 @@ public:
     std::vector<llvm::Type *> getTyList(std::vector<std::shared_ptr<wind::Type>> types);
     size_t getTypeSize(llvm::Type *ty);
     llvm::Align getStructAlign(llvm::StructType *ty);
-    llvm::Value* mallocInstance(llvm::Type *ty, const std::string &name, llvm::Value *num = nullptr);
     llvm::StructType* getStructTy(std::shared_ptr<wind::Type> _ty);
     llvm::StructType* getProtocolStructTy();
     llvm::GlobalVariable* createGlobalVar(const std::string& name, llvm::Constant* init);

@@ -89,11 +89,9 @@ add_executable(wind ${SOURCE_FILES})
 target_include_directories(wind PRIVATE
     "${PROJECT_SOURCE_DIR}/src"
     "${PROJECT_SOURCE_DIR}/3rd"
-    /opt/homebrew/opt/libgc/include
     /opt/homebrew/opt/llvm/include
 )
 
 target_link_libraries(wind PRIVATE
-    /opt/homebrew/opt/libgc/lib/libgc.dylib
     /opt/homebrew/opt/llvm/lib/libLLVM.dylib
 )
