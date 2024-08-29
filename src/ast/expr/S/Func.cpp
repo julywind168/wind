@@ -8,6 +8,7 @@ void Func::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expec
     for (auto& p : callee->params) {
         myEnv->define(p.name, Symbol::variable_(p.name, p.ty, false, nullptr));
     }
+    body->orphanCheck();
     // tips: body typecheck in codegen
     if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {
         panic(fmt::format("Func::typecheck failed, expected {}, but {}", expectedTy->toString(), ty ? ty->toString() : "void"));
@@ -46,8 +47,6 @@ llvm::Function* Func::genfunc(CompileCtx &ctx, std::vector<std::shared_ptr<wind:
         ctx.builder->CreateStore(&arg, addr);
     }
     auto ret = body->codegen(ctx);
-
-    env->close(ctx);
 
     if (callee->retTy->isVoid()) {
         ctx.builder->CreateRetVoid();

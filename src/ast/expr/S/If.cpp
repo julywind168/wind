@@ -9,9 +9,11 @@ void If::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expecte
     thenEnv = std::make_shared<Env>(env);
     _test->typecheck(env, wind::Type::BOOL);
     _then->typecheck(thenEnv);
+    _then->orphanCheck();
     if (_else) {
         elseEnv = std::make_shared<Env>(env);
         _else->typecheck(elseEnv);
+        _else->orphanCheck();
         if (isEqual(_then->ty, _else->ty)) {
             this->ty = _then->ty;
         } else {

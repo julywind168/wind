@@ -18,7 +18,7 @@ Wiki [Wind入门指南](https://github.com/julywind168/wind/wiki/Guides)
 # Build (Macos)
 其他系统的构建是类似的，但是未测试
 ```bash
-brew install llvm libgc
+brew install llvm
 mkdir build && cd build
 cmake -G Ninja ..
 ninja
@@ -57,7 +57,9 @@ mv wind ../wind && cd ..
 5. 元编程, 一流的范型(单态化，无运行时性能损失。共享 ast, 编译期也不会内存爆炸), 加上
 元方法, 让 wind 的容器, 比如 array table 都是用 wind 编写的。
 
-6. 一流的 jit (增量编译 & 热更新), 该功能以库的形式提供。比如：
+6. 值类型语义, 不需要垃圾回收，不需要内存管理。(可以手动在堆上分配内存, 但需要手动释放。 wind 不对指针的操作提供安全保证)
+
+7. 一流的 jit (增量编译 & 热更新), 该功能以库的形式提供。比如：
 ```lisp
 (func (main)'i32 {
     (let jit = (jit:new))
@@ -81,7 +83,6 @@ mv wind ../wind && cd ..
 - [] module/package
 - [] closure
 - [] jit (wind run ... 其实就是在jit engine 中执行的, 但是热更新还没完成)
-- [] gc (目前使用的 libgc, 我希望实现一个简洁和轻量的 gc)
 - [] stdlib
 
 ## Wind 1.x Roadmap

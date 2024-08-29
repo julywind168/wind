@@ -42,5 +42,6 @@ llvm::Value* Loop::codegen(CompileCtx &ctx) {
 
     // end
     ctx.builder->SetInsertPoint(endBB);
+    myEnv->close(ctx);
     return nullptr;
 }

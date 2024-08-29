@@ -86,6 +86,12 @@ public:
         return mt.source;
     }
 
+    void orphanCheck() {
+        if (nodeTy() == NodeType::VAR) {
+            panic("Orphan variable");
+        } 
+    }
+
     void panic(std::string msg) {
         throw std::runtime_error(fmt::format("{}:{}:{}: {} @source`{}`", mt.filename, mt.line, mt.offset, msg, mt.source));
     }
