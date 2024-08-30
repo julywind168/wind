@@ -64,6 +64,7 @@ public:
     virtual NodeType nodeTy() const = 0;
     virtual std::string toString() const = 0;
     virtual bool isLiteral() { return false; }
+    virtual bool isIdentifier() { return false; }
     virtual llvm::Value* codegen(CompileCtx &ctx) { return nullptr; }
     virtual llvm::Value* getVariableAddress(CompileCtx &ctx) { return nullptr; }
     virtual void typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy = nullptr) {

@@ -8,6 +8,11 @@ void Var::markTy(std::shared_ptr<wind::Type> ty) {
 void Var::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy) {
     this->env = env;
     init->typecheck(env);
+    // replace init => (init.__clone)
+    if (init->isIdentifier() && env->lookupMeatFunc(init->ty->getName(), "__clone")) {
+        init = parseString(env, "__clone", fmt::format("({}.__clone)", init->getSourceCode()));
+        init->typecheck(env);
+    }
     if (init->ty == nullptr) {
         panic("Var::typecheck init expr type is void");
     }

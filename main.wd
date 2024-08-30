@@ -2,6 +2,7 @@
 (extern (malloc size'u64)'ptr)
 (extern (realloc p'ptr size'u64)'ptr)
 (extern (free p'ptr))
+(extern (memcpy dst'ptr src'ptr size'u64))
 
 (impl u64
     (func (to_i32 self)'i32 -> (cast self to i32))
@@ -30,6 +31,15 @@
         (printf "free array\n")
         (free self.data)
     })
+    /* todo: fix type circular reference
+    (func (__clone self)'array<T> -> {
+        (let size = (sizeof T) * self.capacity)
+        (let data = (malloc size))
+        (memcpy data self.data size)
+        (printf "clone array\n")
+        {data: data, size: self.size, capacity: self.capacity}'array<T>
+    })
+    */
 )
 
 (func (main)'i32 -> {
@@ -44,6 +54,8 @@
     (printf "a[0] = %d\n" a[0])
     (printf "a[1] = %d\n" a[1])
     (printf "a[2] = %d\n" a[2])
+    // test clone
+    // (let a1 = a)
 
     // test ptr
     (let ptr = (alloc i32))

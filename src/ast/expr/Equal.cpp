@@ -11,7 +11,11 @@ void Equal::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
     this->env = env;
     left->typecheck(env);
     right->typecheck(env);
-
+    // replace right => (right.__clone)
+    if (right->isIdentifier() && env->lookupMeatFunc(right->ty->getName(), "__clone")) {
+        right = parseString(env, "__clone", fmt::format("({}.__clone)", right->getSourceCode()));
+        right->typecheck(env);
+    }
     if (left->nodeTy() != NodeType::IDENTIFIER && left->nodeTy() != NodeType::DOT && left->nodeTy() != NodeType::INDEX) {
         panic("Equal::typecheck failed, left side must be an identifier (current version)");
     }
@@ -31,20 +35,9 @@ void Equal::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
 
 // `root[key] = value` => (root.__newindex key value)
 std::unique_ptr<Expr> Equal::createNewIndexCall() {
-    auto isNewIndexCall = [&](std::string tyName) {
-        if (auto s = env->lookup(tyName)) {
-            if(s->ty == SymbolType::TYPE) {
-                if (s->t.findMethod("__newindex")) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
-
     if (left->nodeTy() == NodeType::INDEX) {
         auto l = (Index*)left.get();
-        if (isNewIndexCall(l->root->ty->getName())) {
+        if (env->lookupMeatFunc(l->root->ty->getName(), "__newindex")) {
             std::string code = fmt::format("({}.__newindex {} {})", l->root->getSourceCode(), l->key->getSourceCode(), right->getSourceCode());
             return parseString(env, "__newindex", code);
         }

@@ -16,6 +16,8 @@ public:
 
     NodeType nodeTy() const override { return NodeType::IDENTIFIER; }
 
+    bool isIdentifier() override { return true; }
+
     void typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy = nullptr) override;
 
     std::shared_ptr<Callee> getCallee(std::vector<std::shared_ptr<wind::Type>> types) override;

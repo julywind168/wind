@@ -15,6 +15,8 @@ public:
 
     NodeType nodeTy() const override { return NodeType::DOT; }
 
+    bool isIdentifier() override { return true; }
+
     void markTy(std::shared_ptr<wind::Type> ty) override;
 
     void typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy = nullptr) override;

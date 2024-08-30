@@ -11,6 +11,8 @@ public:
         ty = wind::Type::BOOL;
     }
 
+    bool isLiteral() override { return true; }
+
     NodeType nodeTy() const override { return NodeType::BOOL_LIT; }
 
     void markTy(std::shared_ptr<wind::Type> ty) override;
