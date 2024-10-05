@@ -24,8 +24,12 @@ public:
         return name;
     }
 
-    std::vector<std::shared_ptr<Type>> getParameters() override { 
-        return parameters;
+    std::vector<std::shared_ptr<Type>> getParameters() override {
+        std::vector<std::shared_ptr<Type>> r;
+        for (auto ty : parameters) {
+            r.push_back(ty->get());
+        }
+        return r;
     }
 
     void setParameters(std::vector<std::shared_ptr<Type>> parameters) override {

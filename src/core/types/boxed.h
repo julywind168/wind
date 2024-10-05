@@ -58,6 +58,9 @@ public:
     }
 
     void set(std::shared_ptr<Type> ty) {
+        if (dynamic_cast<BoxedType*>(ty.get())) {
+            throw std::runtime_error("Cannot box a boxed type");
+        }
         *this->ty = ty;
     }
 

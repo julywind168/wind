@@ -28,10 +28,9 @@
     (func (__index self index'i32)'T -> (load T from self.data index))
     (func (__newindex self index'i32 value'T) -> (store value to self.data index))
     (func (__close self) -> {
-        (printf "free array\n")
+        (printf "free array %p\n" self.data)
         (free self.data)
     })
-    /* todo: fix type circular reference
     (func (__clone self)'array<T> -> {
         (let size = (sizeof T) * self.capacity)
         (let data = (malloc size))
@@ -39,7 +38,6 @@
         (printf "clone array\n")
         {data: data, size: self.size, capacity: self.capacity}'array<T>
     })
-    */
 )
 
 (func (main)'i32 -> {
@@ -55,7 +53,7 @@
     (printf "a[1] = %d\n" a[1])
     (printf "a[2] = %d\n" a[2])
     // test clone
-    // (let a1 = a)
+    (let a1 = a)
 
     // test ptr
     (let ptr = (alloc i32))
