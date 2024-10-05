@@ -25,7 +25,7 @@ public:
 
 private:
     std::shared_ptr<Env> env;
-    std::unique_ptr<Expr> createIndexCall();
+    std::unique_ptr<Expr> call;
 };
 
 #endif

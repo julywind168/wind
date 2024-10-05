@@ -40,6 +40,15 @@
     })
 )
 
+(func (sum_i32_array a'array<i32>)'i32 -> {
+    (var n = 0)
+    (loop (var i = 0) i < (a.size.to_i32) {
+        (n = n + a[i])
+        (i = i + 1)
+    })
+    n
+})
+
 (func (main)'i32 -> {
     // test tuple
     (let t = (1, 2, 3))
@@ -52,8 +61,10 @@
     (printf "a[0] = %d\n" a[0])
     (printf "a[1] = %d\n" a[1])
     (printf "a[2] = %d\n" a[2])
+
     // test clone
-    (let a1 = a)
+    (let a1 = a)                                        // clone 1st
+    (printf "sum of a1 is: %d\n" (sum_i32_array a1))    // clone 2nd
 
     // test ptr
     (let ptr = (alloc i32))

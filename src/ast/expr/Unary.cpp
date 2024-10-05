@@ -16,7 +16,7 @@ void Unary::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expe
         panic(fmt::format("Unary::typecheck failed, unknown operator {}", op));
     }
     if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {
-        panic(fmt::format("Infix::typecheck failed, expected {}, but {}", expectedTy->toString(), ty ? ty->toString() : "void"));
+        panic(fmt::format("Unary::typecheck failed, expected {}, but {}", expectedTy->toString(), ty ? ty->toString() : "void"));
     }
 }
 

@@ -21,6 +21,11 @@ void Call::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expec
         auto &param = params[i];
         auto paramTy = callee->params.size() > i + self ? callee->params[i+self].ty : nullptr;
         param->typecheck(env, paramTy);
+        // replace param => (param.__clone)
+        if (param->isIdentifier() && env->lookupMeatFunc(param->ty->getName(), "__clone")) {
+            params[i] = parseString(env, "__clone", fmt::format("({}.__clone)", param->getSourceCode()));
+            params[i]->typecheck(env, paramTy);
+        }
     }
     this->ty = callee->retTy->get();
     if (expectedTy && invalidTypeCast(env, ty, expectedTy)) {
