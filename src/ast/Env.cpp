@@ -66,7 +66,7 @@ IFunc* Env::lookupMeatFunc(std::string tyName, std::string funcName) {
 
 void Env::close(CompileCtx &ctx, std::string excepted) {
     for (auto& [name, s] : symbols) {
-        if (name != excepted && s->ty == SymbolType::VARIABLE) {
+        if (name != excepted && s->ty == SymbolType::VARIABLE && !s->v.ty->isRef()) { // ref type can't be closed
             if (this->lookupMeatFunc(s->v.ty->getName(), "__close")) {
                 std::string code = fmt::format("({}.__close)", name);
                 auto env = this->shared_from_this();
