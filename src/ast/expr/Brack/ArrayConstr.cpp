@@ -32,7 +32,7 @@ void ArrayConstr::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type
 /**
 *   [1, 2, 3] whill be replace by
 *   {
-*       (let tmp {data: (malloc 8 * (sizeof i32)), size: 0, capacity: 8}''array<i32>)
+*       (let tmp {data: (malloc 8 * (sizeof i32)), size: 0, capacity: 8}'array<i32>)
 *       (tmp.append 1)
 *       (tmp.append 2)
 *       (tmp.append 3)

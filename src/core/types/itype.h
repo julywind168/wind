@@ -25,6 +25,7 @@ public:
     virtual bool isUnsigned() { return false; }
     virtual bool isInteger() { return isSigned() || isUnsigned(); }
     virtual bool isFloat() { return false; }
+    bool isNumber() { return isInteger() || isFloat(); }
     virtual bool isPrimitive() { return false; }
     virtual bool isStruct() { return false; }
     virtual bool isProtocol() { return false; }

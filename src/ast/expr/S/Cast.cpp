@@ -2,10 +2,10 @@
 
 void Cast::typecheck(std::shared_ptr<Env> env, std::shared_ptr<wind::Type> expectedTy) {
     source->typecheck(env);
-    if (!source->ty->isInteger() && !source->ty->isFloat()) {
+    if (!source->ty->isNumber()) {
         panic(fmt::format("Cast::typecheck failed, expected number, but source: {}", source->ty->toString()));
     }
-    if (!dstTy->isInteger() && !dstTy->isFloat()) {
+    if (!dstTy->isNumber()) {
         panic(fmt::format("Cast::typecheck failed, expected number, but dstTy: {}", dstTy->toString()));
     }
     ty = dstTy;
