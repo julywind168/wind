@@ -3,7 +3,7 @@ Wind 是一种静态类型，通用编译型语言，它旨在提供一流的 ji
 
 # Hello World
 ```lisp
-(extern (printf fmt''u8 ...))
+(extern (printf fmt'ptr ...))
 
 (func (main)'i32 {
     (let a = [1, 2, 3])

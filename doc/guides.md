@@ -64,7 +64,7 @@ wind 也许会借鉴 [Elixir 模式匹配](https://hexdocs.pm/elixir/pattern-mat
 ## 函数 & extern
 ```
 // 声明外部函数 (C/Wind 函数)
-(extern (printf fmt''u8))
+(extern (printf fmt'ptr))
 
 
 // 定义一个函数
