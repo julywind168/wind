@@ -7,7 +7,7 @@ Wind 是一种静态类型，通用编译型语言，它旨在提供一流的 ji
 
 (func (main)'i32 {
     (let a = [1, 2, 3])
-    (loop (var i 0) i < 3 {
+    (loop (var i = 0) i < 3 {
         (printf "hello world %d\n" a[i])
     })
 })
